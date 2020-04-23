@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import AnecdoteForm from './components/AnecdoteForm';
 import { Voteincrement } from './reducers/anecdoteReducer';
-import { createAnecdote } from './reducers/anecdoteReducer';
 
 const App = () => {
   //Sort by higest number of votes
@@ -13,13 +13,6 @@ const App = () => {
   const vote = (id) => {
     console.log('vote', id);
     dispatch(Voteincrement(id));
-  };
-
-  const create = (e) => {
-    e.preventDefault();
-    const content = e.target.anecdote.value;
-    e.target.anecdote.value = '';
-    dispatch(createAnecdote(content));
   };
 
   return (
@@ -34,13 +27,7 @@ const App = () => {
           </div>
         </div>
       ))}
-      <h2>create new</h2>
-      <form onSubmit={create}>
-        <div>
-          <input name='anecdote' />
-        </div>
-        <button>create</button>
-      </form>
+      <AnecdoteForm />
     </div>
   );
 };
