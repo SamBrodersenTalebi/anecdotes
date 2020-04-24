@@ -21,10 +21,10 @@ const reducer = (state = [], action) => {
   }
 };
 
-export const createAnecdote = (content) => {
+export const createAnecdote = (anecdote) => {
   return {
     type: 'CREATE',
-    data: { content, votes: 0 },
+    data: anecdote,
   };
 };
 export const Voteincrement = (id) => {

@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { createAnecdote } from '../reducers/anecdoteReducer';
+import anecdoteService from '../services/anecdotes';
 import {
   addNotification,
   removeNotification,
@@ -10,11 +11,12 @@ import {
 const AnecdoteForm = () => {
   const dispatch = useDispatch();
 
-  const create = (e) => {
+  const create = async (e) => {
     e.preventDefault();
     const content = e.target.anecdote.value;
     e.target.anecdote.value = '';
-    dispatch(createAnecdote(content));
+    const newAnecdote = await anecdoteService.createNew(content);
+    dispatch(createAnecdote(newAnecdote));
     const notificationContent = `you have created '${content}'`;
     dispatch(addNotification(notificationContent));
     setTimeout(() => dispatch(removeNotification()), 3000);
