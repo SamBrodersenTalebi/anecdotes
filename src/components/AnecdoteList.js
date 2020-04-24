@@ -9,10 +9,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import Notification from './Notification';
 
 const AnecdoteList = () => {
-  //Sort by higest number of votes
-  const anecdotes = useSelector((state) => state.anecdotes).sort((a, b) =>
-    a.votes > b.votes ? -1 : 1
-  );
+  const filterValue = useSelector((state) => state.filter);
+  //Sort by higest number of votes and filter by the filter in state
+  const anecdotes = useSelector((state) => state.anecdotes)
+    .sort((a, b) => (a.votes > b.votes ? -1 : 1))
+    .filter((str) => str.content.includes(filterValue));
   const dispatch = useDispatch();
 
   const vote = (id) => {
