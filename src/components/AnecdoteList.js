@@ -23,7 +23,7 @@ const AnecdoteList = () => {
     //set notification
     const content = `you voted '${anecdote.content}'`;
     dispatch(addNotification(content));
-    setTimeout(() => dispatch(removeNotification()), 5000);
+    setTimeout(() => dispatch(removeNotification()), 3000);
   };
   return (
     <Fragment>
