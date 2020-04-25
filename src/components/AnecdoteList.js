@@ -1,10 +1,7 @@
 import React from 'react';
 import { Fragment } from 'react';
 import { Voteincrement } from '../reducers/anecdoteReducer';
-import {
-  addNotification,
-  removeNotification,
-} from '../reducers/notificationReducer';
+import { setNotification } from '../reducers/notificationReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from './Notification';
 
@@ -23,8 +20,7 @@ const AnecdoteList = () => {
     dispatch(Voteincrement(id, anecdote));
     //set notification
     const content = `you voted '${anecdote.content}'`;
-    dispatch(addNotification(content));
-    setTimeout(() => dispatch(removeNotification()), 3000);
+    dispatch(setNotification(content, 3));
   };
   return (
     <Fragment>
