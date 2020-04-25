@@ -4,14 +4,13 @@ const reducer = (state = [], action) => {
   console.log('action', action);
   switch (action.type) {
     case 'INCREMENT':
-      const id = action.data.id;
-      const anecdoteToChange = state.find((a) => a.id === id);
+      const anecdoteUpdated = action.data;
       const changedAnecdote = {
-        ...anecdoteToChange,
-        votes: ++anecdoteToChange.votes,
+        ...anecdoteUpdated,
+        votes: ++anecdoteUpdated.votes,
       };
       return state.map((anecdote) =>
-        anecdote.id !== id ? anecdote : changedAnecdote
+        anecdote.id !== anecdoteUpdated.id ? anecdote : changedAnecdote
       );
     case 'CREATE':
       const newAnecdote = action.data;
@@ -33,11 +32,16 @@ export const createAnecdote = (anecdote) => {
   };
 };
 
-export const Voteincrement = (id) => {
-  console.log(id);
-  return {
-    type: 'INCREMENT',
-    data: { id },
+export const Voteincrement = (id, anecdoteToChange) => {
+  return async (dispatch) => {
+    const updatedAnecdote = await anecdoteService.updateAnecdote(
+      id,
+      anecdoteToChange
+    );
+    dispatch({
+      type: 'INCREMENT',
+      data: updatedAnecdote,
+    });
   };
 };
 
