@@ -24,11 +24,15 @@ const reducer = (state = [], action) => {
 };
 
 export const createAnecdote = (anecdote) => {
-  return {
-    type: 'CREATE',
-    data: anecdote,
+  return async (dispatch) => {
+    const newAnecdote = await anecdoteService.createNew(anecdote);
+    dispatch({
+      type: 'CREATE',
+      data: newAnecdote,
+    });
   };
 };
+
 export const Voteincrement = (id) => {
   console.log(id);
   return {
