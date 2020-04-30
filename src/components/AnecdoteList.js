@@ -2,7 +2,7 @@ import React from 'react';
 import { Fragment } from 'react';
 import { Voteincrement } from '../reducers/anecdoteReducer';
 import { setNotification } from '../reducers/notificationReducer';
-import { useSelector, useDispatch } from 'react-redux';
+//import { useSelector, useDispatch } from 'react-redux';
 import Notification from './Notification';
 import { connect } from 'react-redux';
 
@@ -14,17 +14,18 @@ const AnecdoteList = (props) => {
   const anecdotes = useSelector((state) => state.anecdotes)
     .sort((a, b) => (a.votes > b.votes ? -1 : 1))
     .filter((str) => str.content.includes(filterValue));
-  */
+  
   const dispatch = useDispatch();
+  */
 
   const vote = (id) => {
     console.log('vote', id);
     //find the voted anecdote
     const anecdote = props.anecdotes.find((x) => x.id === id);
-    dispatch(Voteincrement(id, anecdote));
+    props.Voteincrement(id, anecdote);
     //set notification
     const content = `you voted '${anecdote.content}'`;
-    dispatch(setNotification(content, 3));
+    props.setNotification(content, 3);
   };
 
   return (
@@ -56,5 +57,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-const ConnectedAnecdotes = connect(mapStateToProps)(AnecdoteList);
+const mapDispatchToProps = {
+  setNotification,
+  Voteincrement,
+};
+
+const ConnectedAnecdotes = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnecdoteList);
 export default ConnectedAnecdotes;
