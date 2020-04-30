@@ -1,19 +1,22 @@
 import { Fragment } from 'react';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+//import { useDispatch } from 'react-redux';
 import { createAnecdote } from '../reducers/anecdoteReducer';
 import { setNotification } from '../reducers/notificationReducer';
+import { connect } from 'react-redux';
 
-const AnecdoteForm = () => {
-  const dispatch = useDispatch();
+const AnecdoteForm = (props) => {
+  //const dispatch = useDispatch();
 
   const create = async (e) => {
     e.preventDefault();
     const content = e.target.anecdote.value;
     e.target.anecdote.value = '';
-    dispatch(createAnecdote(content));
+    //dispatch(createAnecdote(content));
+    props.createAnecdote(content);
     const notificationContent = `you have created '${content}'`;
-    dispatch(setNotification(notificationContent, 2));
+    //dispatch(setNotification(notificationContent, 2));
+    props.setNotification(notificationContent);
   };
 
   return (
@@ -29,4 +32,4 @@ const AnecdoteForm = () => {
   );
 };
 
-export default AnecdoteForm;
+export default connect(null, { createAnecdote, setNotification })(AnecdoteForm);
