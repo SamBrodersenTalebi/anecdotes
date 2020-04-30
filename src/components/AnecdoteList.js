@@ -4,6 +4,7 @@ import { Voteincrement } from '../reducers/anecdoteReducer';
 import { setNotification } from '../reducers/notificationReducer';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from './Notification';
+import { connect } from 'react-redux';
 
 const AnecdoteList = () => {
   const filterValue = useSelector((state) => state.filter);
@@ -38,4 +39,12 @@ const AnecdoteList = () => {
   );
 };
 
-export default AnecdoteList;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    anecdotes: state.anecdotes,
+    filter: state.filter,
+  };
+};
+const ConnectedAnecdotes = connect(mapStateToProps)(AnecdoteList);
+export default ConnectedAnecdotes;

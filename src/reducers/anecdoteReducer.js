@@ -1,7 +1,6 @@
 import anecdoteService from '../services/anecdotes';
 
 const reducer = (state = [], action) => {
-  console.log('action', action);
   switch (action.type) {
     case 'INCREMENT':
       const anecdoteUpdated = action.data;
