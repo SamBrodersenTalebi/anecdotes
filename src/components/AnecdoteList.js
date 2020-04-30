@@ -6,27 +6,39 @@ import { useSelector, useDispatch } from 'react-redux';
 import Notification from './Notification';
 import { connect } from 'react-redux';
 
-const AnecdoteList = () => {
+const AnecdoteList = (props) => {
+  /*
+  //get filter
   const filterValue = useSelector((state) => state.filter);
   //Sort by higest number of votes and filter by the filter in state
   const anecdotes = useSelector((state) => state.anecdotes)
     .sort((a, b) => (a.votes > b.votes ? -1 : 1))
     .filter((str) => str.content.includes(filterValue));
+  */
   const dispatch = useDispatch();
 
   const vote = (id) => {
     console.log('vote', id);
     //find the voted anecdote
-    const anecdote = anecdotes.find((x) => x.id === id);
+    const anecdote = props.anecdotes.find((x) => x.id === id);
     dispatch(Voteincrement(id, anecdote));
     //set notification
     const content = `you voted '${anecdote.content}'`;
     dispatch(setNotification(content, 3));
   };
+
+  const anecdotesToShow = () => {
+    //get anecdotes with props
+    let anecdotes = props.anecdotes;
+    anecdotes
+      .sort((a, b) => (a.votes > b.votes ? -1 : 1))
+      .filter((string) => string.content.includes(props.filter));
+    return anecdotes;
+  };
   return (
     <Fragment>
       <Notification />
-      {anecdotes.map((anecdote) => (
+      {anecdotesToShow().map((anecdote) => (
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
