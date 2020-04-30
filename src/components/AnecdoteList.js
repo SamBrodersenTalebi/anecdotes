@@ -27,18 +27,10 @@ const AnecdoteList = (props) => {
     dispatch(setNotification(content, 3));
   };
 
-  const anecdotesToShow = () => {
-    //get anecdotes with props
-    let anecdotes = props.anecdotes;
-    anecdotes
-      .sort((a, b) => (a.votes > b.votes ? -1 : 1))
-      .filter((string) => string.content.includes(props.filter));
-    return anecdotes;
-  };
   return (
     <Fragment>
       <Notification />
-      {anecdotesToShow().map((anecdote) => (
+      {props.anecdotes.map((anecdote) => (
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
@@ -53,10 +45,16 @@ const AnecdoteList = (props) => {
 
 const mapStateToProps = (state) => {
   console.log(state);
+  //Filter anecdotes by filter string
+  let anecdotes = state.anecdotes;
+  anecdotes
+    .sort((a, b) => (a.votes > b.votes ? -1 : 1))
+    .filter((string) => string.content.includes(state.filter));
   return {
-    anecdotes: state.anecdotes,
+    anecdotes,
     filter: state.filter,
   };
 };
+
 const ConnectedAnecdotes = connect(mapStateToProps)(AnecdoteList);
 export default ConnectedAnecdotes;
