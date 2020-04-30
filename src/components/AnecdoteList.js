@@ -47,12 +47,12 @@ const AnecdoteList = (props) => {
 const mapStateToProps = (state) => {
   console.log(state);
   //Filter anecdotes by filter string
-  let anecdotes = state.anecdotes;
-  anecdotes
+  let filteredAnecdotes = state.anecdotes;
+  filteredAnecdotes
     .sort((a, b) => (a.votes > b.votes ? -1 : 1))
     .filter((string) => string.content.includes(state.filter));
   return {
-    anecdotes,
+    anecdotes: filteredAnecdotes,
     filter: state.filter,
   };
 };
