@@ -28,10 +28,17 @@ const AnecdoteList = (props) => {
     props.setNotification(content, 3);
   };
 
+  const anecdotesToShow = () => {
+    let anecdotes = props.anecdotes
+      .sort((a, b) => (a.votes > b.votes ? -1 : 1))
+      .filter((string) => string.content.includes(props.filter));
+    return anecdotes;
+  };
+
   return (
     <Fragment>
       <Notification />
-      {props.anecdotes.map((anecdote) => (
+      {anecdotesToShow().map((anecdote) => (
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
@@ -46,13 +53,8 @@ const AnecdoteList = (props) => {
 
 const mapStateToProps = (state) => {
   console.log(state);
-  //Filter anecdotes by filter string
-  let filteredAnecdotes = state.anecdotes;
-  filteredAnecdotes
-    .sort((a, b) => (a.votes > b.votes ? -1 : 1))
-    .filter((string) => string.content.includes(state.filter));
   return {
-    anecdotes: filteredAnecdotes,
+    anecdotes: state.anecdotes,
     filter: state.filter,
   };
 };
